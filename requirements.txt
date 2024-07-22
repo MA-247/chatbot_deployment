@@ -4,3 +4,4 @@ langchain-google-genai
 streamlit
 langchain_community
 langchain_groq
+dotenv
