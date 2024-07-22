@@ -29,7 +29,7 @@ def get_vectorstore_from_url(url):
     text_chunks = text_splitter.split_text(texts)
     
     # create a vectorstore from the chunks
-    vector_store = FAISS.from_text(text_chunks, GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
+    vector_store = FAISS.from_texts(text_chunks, GoogleGenerativeAIEmbeddings(model="models/embedding-001"))
     return vector_store
 
 def get_context_retriever_chain(vector_store):
