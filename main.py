@@ -11,67 +11,13 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.vectorstores.faiss import FAISS
 from langchain_groq import ChatGroq
 import requests
-from PIL import Image
-from io import BytesIO
-import pytesseract
 
 
 #load_dotenv()
-def solve_captcha(session, captcha_img_url, form_action, captcha_input_name, form_data):
-    # Fetch the CAPTCHA image
-    captcha_response = session.get(captcha_img_url)
-    captcha_image = Image.open(BytesIO(captcha_response.content))
-
-    # Use OCR to solve the CAPTCHA
-    captcha_text = pytesseract.image_to_string(captcha_image).strip()
-
-    # Add the CAPTCHA solution to the form data
-    form_data[captcha_input_name] = captcha_text
-
-    # Submit the CAPTCHA solution
-    post_response = session.post(form_action, data=form_data)
-    return post_response
-
 def crawl_website(url):
-    session = requests.Session()
-    response = session.get(url)
-
-    if response.status_code != 200:
-        st.error(f"Failed to retrieve the website content. Status code: {response.status_code}")
-        logger.error(f"Failed to retrieve the website content. Status code: {response.status_code}")
-        return None
+    response = requests.get(url)
 
     soup = BeautifulSoup(response.content, 'html.parser')
-
-    # Check if a CAPTCHA is present
-    captcha_img = soup.find('img', {'src': lambda x: x and 'captcha' in x})
-    if captcha_img:
-        captcha_url = captcha_img['src']
-        if not captcha_url.startswith('http'):
-            captcha_url = url + captcha_url
-
-        # Locate CAPTCHA form and inputs
-        captcha_form = soup.find('form', {'id': 'captcha_form'})
-        if not captcha_form:
-            st.error("CAPTCHA form not found on the page.")
-            logger.error("CAPTCHA form not found on the page.")
-            return None
-
-        captcha_input_name = captcha_form.find('input', {'type': 'text'})['name']
-        form_action = captcha_form['action']
-        if not form_action.startswith('http'):
-            form_action = url + form_action
-
-        form_data = {input_tag['name']: input_tag.get('value', '') for input_tag in captcha_form.find_all('input', {'type': 'hidden'})}
-
-        # Solve CAPTCHA
-        post_response = solve_captcha(session, captcha_url, form_action, captcha_input_name, form_data)
-        if post_response.status_code != 200:
-            st.error(f"Failed to submit CAPTCHA. Status code: {post_response.status_code}")
-            logger.error(f"Failed to submit CAPTCHA. Status code: {post_response.status_code}")
-            return None
-
-        soup = BeautifulSoup(post_response.content, 'html.parser')
 
     return soup.get_text()
 
