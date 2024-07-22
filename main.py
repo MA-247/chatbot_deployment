@@ -4,14 +4,14 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_google_genai import GoogleGenerativeAI, GoogleGenerativeAIEmbeddings
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.chains import create_history_aware_retriever, create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.vectorstores.faiss import FAISS
 from langchain_groq import ChatGroq
 
-load_dotenv()
+#load_dotenv()
 
 def get_vectorstore_from_url(url):
     # get the text in document form
