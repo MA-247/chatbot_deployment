@@ -77,8 +77,8 @@ def get_response(user_input):
 
 # app config
 st.set_page_config(page_title="Chat with websites", page_icon="🤖")
-st.title("Chat with websites")
-
+st.title('🦜🔗 Chat With Website')
+st.subheader('Input your website URL, ask questions, and receive answers directly from the website.')
 # sidebar
 with st.sidebar:
     st.header("Settings")
