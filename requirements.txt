@@ -4,3 +4,5 @@ langchain-google-genai
 streamlit
 langchain_community
 langchain_groq
+requests
+bs4
