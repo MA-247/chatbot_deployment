@@ -15,12 +15,6 @@ from PIL import Image
 from io import BytesIO
 import pytesseract
 
-pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'  # Adjust this path based on your installation
-
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
 
 #load_dotenv()
 def solve_captcha(session, captcha_img_url, form_action, captcha_input_name, form_data):
