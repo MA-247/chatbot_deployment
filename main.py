@@ -10,6 +10,17 @@ from langchain.chains import create_history_aware_retriever, create_retrieval_ch
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.vectorstores.faiss import FAISS
 from langchain_groq import ChatGroq
+import requests
+from PIL import Image
+from io import BytesIO
+import pytesseract
+
+pytesseract.pytesseract.tesseract_cmd = r'/usr/bin/tesseract'  # Adjust this path based on your installation
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 #load_dotenv()
 def solve_captcha(session, captcha_img_url, form_action, captcha_input_name, form_data):
