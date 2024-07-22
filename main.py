@@ -11,7 +11,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.vectorstores.faiss import FAISS
 from langchain_groq import ChatGroq
 import requests
-
+from bs4 import BeautifulSoup
 
 #load_dotenv()
 def crawl_website(url):
